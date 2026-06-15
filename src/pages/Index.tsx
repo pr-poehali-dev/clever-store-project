@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '@/lib/auth';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,9 +40,10 @@ const rarityColor: Record<Product['rarity'], string> = {
 };
 
 const Index = () => {
+  const { user } = useAuth();
   const [query, setQuery] = useState('');
   const [cart, setCart] = useState<Product[]>([]);
-  const balance = 500;
+  const balance = user?.clovers ?? 0;
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -72,9 +75,29 @@ const Index = () => {
             <a href="#catalog" className="hover:text-clover transition-colors">Каталог</a>
           </nav>
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-clover/10 font-display font-bold text-clover-dark text-sm">
-              <span>💠</span> {balance - cartTotal}
-            </div>
+            {user && (
+              <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-clover/10 font-display font-bold text-clover-dark text-sm">
+                <span>💠</span> {balance}
+              </div>
+            )}
+            {user ? (
+              <Link to="/cabinet">
+                <Button variant="outline" className="rounded-full gap-2 border-clover/30 font-display font-bold">
+                  <div className="w-6 h-6 rounded-full clover-grad flex items-center justify-center overflow-hidden text-xs">
+                    {user.avatar_url ? (
+                      <img src={user.avatar_url} alt="" className="w-full h-full object-cover" />
+                    ) : '🍀'}
+                  </div>
+                  <span className="hidden sm:inline">{user.nickname}</span>
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/auth">
+                <Button variant="outline" className="rounded-full gap-1.5 border-clover/30 font-display font-bold">
+                  <Icon name="User" size={16} /> Войти
+                </Button>
+              </Link>
+            )}
             <Sheet>
               <SheetTrigger asChild>
                 <Button className="clover-grad text-white rounded-full gap-2 font-display font-bold shadow-lg shadow-clover/30 hover:opacity-90">

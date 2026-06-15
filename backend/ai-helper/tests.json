@@ -1,0 +1,17 @@
+{
+  "tests": [
+    {
+      "name": "CORS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "No auth",
+      "method": "POST",
+      "path": "/",
+      "body": {"prompt": "сделай кнопку красной"},
+      "expectedStatus": 401
+    }
+  ]
+}
