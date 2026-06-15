@@ -4,8 +4,13 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --clover: 142 72% 38%;
+    --clover-light: 142 65% 55%;
+    --clover-dark: 150 75% 22%;
+    --lime: 88 70% 50%;
+
+    --background: 120 30% 99%;
+    --foreground: 150 30% 10%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -96,6 +101,46 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer utilities {
+  .clover-grad {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--clover-dark)) 0%,
+      hsl(var(--clover)) 45%,
+      hsl(var(--lime)) 100%
+    );
+  }
+  .text-clover-grad {
+    background: linear-gradient(
+      120deg,
+      hsl(var(--clover)) 0%,
+      hsl(var(--lime)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .mesh-bg {
+    background-color: hsl(120 30% 99%);
+    background-image:
+      radial-gradient(
+        at 12% 8%,
+        hsla(142, 72%, 55%, 0.18) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 88% 12%,
+        hsla(88, 70%, 55%, 0.18) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 70% 90%,
+        hsla(150, 75%, 40%, 0.12) 0px,
+        transparent 45%
+      );
   }
 }
